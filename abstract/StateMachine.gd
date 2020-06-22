@@ -17,18 +17,6 @@ func _ready() -> void:
 	constant_state.enter(self.body)
 	initialize_state(_initial_state)
 
-func initialize_state(state_name) -> void:
-	set_active(true)
-	current_state = get_node(state_name)
-	current_state.enter(self.body)
-
-func set_active(value) -> void:
-	_active = value
-	set_physics_process(value)
-	set_process_input(value)
-	if not _active:
-		current_state = null
-
 func _input(event):
 	current_state.handle_input(event)
 	
@@ -48,6 +36,18 @@ func _change_state(state_name) -> void:
 			current_state = get_node(state_name)
 			emit_signal("state_changed", current_state)
 			current_state.enter(self.body)
+
+func initialize_state(state_name) -> void:
+	set_active(true)
+	current_state = get_node(state_name)
+	current_state.enter(self.body)
+
+func set_active(value) -> void:
+	_active = value
+	set_physics_process(value)
+	set_process_input(value)
+	if not _active:
+		current_state = null
 
 func add_action(action_node, state_name):
 	var state = get_node(state_name)
