@@ -1,18 +1,13 @@
-extends Node
 class_name Action
+extends Node
 
-signal action_performed
+# warning-ignore:unused_signal
+signal action_performed(next_state)
 
 var body: PhysicsBody2D = null
-
-func _ready():
-	var found_body = get_parent()
-	while not found_body is PhysicsBody2D:
-		found_body = found_body.get_parent()
-	body = found_body as PhysicsBody2D
 
 func _update(_delta):
 	pass
 
-func handle_input(event):
+func handle_input(_event):
 	pass
