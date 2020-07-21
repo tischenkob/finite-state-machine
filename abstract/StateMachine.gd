@@ -5,27 +5,35 @@ signal state_changed
 
 export(NodePath) var _initial_state: NodePath
 
-onready var _body = get_parent() setget set_body
+var _state setget set_state
+var _body setget set_body
 
-var _state = null setget set_state
+func _ready() -> void:
+	self._state = get_node(_initial_state) 
+	self._body = get_parent()
 
-func _ready():
-	_state = get_node(_initial_state)
+func _physics_process(delta) -> void:
+	_state._update(delta)
 
-func change_state(state_path : NodePath):
+func _input(event) -> void:
+	_state._handle_input(event)
+
+func change_state(state_path : NodePath) -> void:
 	var state = get_node(state_path)
-	_state = state
+	self._state = state
 
-func set_state(state):
+func set_state(state) -> void:
 	if _state:
 		_state.exit()
-	self._state = state
+	_state = state
+	_state._body = _body	
 	_state.enter()
 
-func set_body(body):
-	self._body = body
-	self._state._body = _body
+func set_body(body) -> void:
+	_body = body
+	for child in get_children():
+		child._body = _body
 
-func add_state(state):
+func add_state(state) -> void:
 	add_child(state)
 	

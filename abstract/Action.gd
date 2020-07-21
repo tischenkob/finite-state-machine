@@ -6,8 +6,8 @@ signal action_performed(next_state)
 
 var _body: Node = null
 
-func _update(_delta):
+func _update(_delta) -> void:
 	pass
 
-func handle_input(_event):
+func _handle_input(_event) -> void:
 	pass

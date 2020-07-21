@@ -10,4 +10,4 @@ func _physics_process(delta):
 	if collision:
 		velocity = velocity.slide(collision.normal)
 	var next_state := "OnGround" if collision else "InAir"
-	state_machine._change_state(next_state)
+	state_machine.change_state(next_state)

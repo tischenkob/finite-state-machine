@@ -5,6 +5,7 @@ export(int) var acceleration := 50
 export(int) var friction := 10
 
 func _update(delta):
+	var body = _body
 	var direction := Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	body.direction = direction if not direction == 0 else body.direction
 	var step : float = acceleration if not direction == 0 else friction
