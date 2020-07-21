@@ -4,7 +4,7 @@ extends Node
 # warning-ignore:unused_signal
 signal action_performed(next_state)
 
-var body: PhysicsBody2D = null
+var _body: Node = null
 
 func _update(_delta):
 	pass

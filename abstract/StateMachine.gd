@@ -1,41 +1,28 @@
-extends Node
 class_name StateMachine
+extends Node
 
 signal state_changed
 
 export(NodePath) var _initial_state: NodePath
 
-onready var body = $".."
+onready var _body = get_parent()
 
-var current_state : State = null
+var _state = null setget set_state
 
-func _ready() -> void:
-	initialize_state(_initial_state)
+func _ready():
+	_state = get_node(_initial_state)
 
-func _input(event):
-	current_state.handle_input(event)
+func change_state(state_path : NodePath):
+	var state = get_node(state_path)
+	_state = state
+
+func set_state(state):
+	if _state:
+		_state.exit()
+	self._state = state
+	self._state._body = _body
+	_state.enter()
+
+func add_state(state):
+	add_child(state)
 	
-func _physics_process(delta) -> void:
-	self._update(delta)
-
-func _update(delta) -> void:
-	current_state._update(delta)
-
-func _change_state(state_name) -> void:
-	for child in get_children():
-		if child.name == state_name:
-			current_state.exit()
-			current_state = get_node(state_name)
-			emit_signal("state_changed", current_state)
-			current_state.enter()
-			return
-
-func initialize_state(state_name) -> void:
-	current_state = get_node(state_name)
-	current_state.enter()
-
-func add_action(action_node, state_name):
-	var state = get_node(state_name)
-	if not state == null:
-		state.add_child(action_node)
-		action_node.connect("action_performed", self, "_change_state")
