@@ -7,7 +7,7 @@ Includes three abstract classes: StateMachine, State, Action
 Adding a new character mechanic is as simple as:
 
 1. dropping an `Action` child-node in a `State` node in a `StateMachine` node
-2. overriding `_update(delta)` or `handle_input(event)`
+2. overriding `_update(delta)` or `_handle_input(event)`
 
 Character\
 --StateMachine\
