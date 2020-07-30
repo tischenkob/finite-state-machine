@@ -1,8 +1,6 @@
 class_name State
 extends Node
 
-signal body_required(by_whom)
-
 export var is_autonomous := false
 
 var _body: Node setget set_body
@@ -24,9 +22,19 @@ func set_body(body: Node) -> void:
 		child._body = _body
 
 
-func enter() -> void:
+func _enter() -> void:
 	pass
+
+	
+func _exit() -> void:
+	pass
+
+
+func enter() -> void:
+	_enter()
 
 
 func exit() -> void:
-	pass
+	_exit()
+	for action in get_children():
+		action._reset_variables()

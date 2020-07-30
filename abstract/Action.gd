@@ -13,3 +13,8 @@ func _update(_delta) -> void:
 
 func _handle_input(_event) -> void:
 	pass
+
+
+
+func _reset_variables() -> void:
+	pass
