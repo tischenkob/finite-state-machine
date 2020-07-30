@@ -25,6 +25,7 @@ func _input(event) -> void:
 func change_state(state_path: NodePath) -> void:
 	var state = get_node(state_path)
 	self._state = state
+	emit_signal("state_changed", state)
 
 
 func set_state(state) -> void:
